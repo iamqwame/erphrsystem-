@@ -4,3 +4,4 @@ django-filter
 drf-yasg
 faker>=18.9.0
 pytest
+pytest-cov

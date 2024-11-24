@@ -1,6 +1,13 @@
 from rest_framework.test import APITestCase, APIClient
 from employees.models import Employee
 from rest_framework import status
+import os
+from django import setup
+from django.test import TestCase
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+setup()
 
 
 class BaseAPITestCase(APITestCase):
@@ -19,7 +26,7 @@ class BaseAPITestCase(APITestCase):
         cls.employee1 = Employee.objects.create(
             first_name="John",
             last_name="Doe",
-            email="johndoe@example.com",
+            email="john.doe@example.com",
             phone="1234567890",
             department="IT",
             position="Developer",
@@ -58,6 +65,11 @@ class EmployeeAPITestCase(BaseAPITestCase):
     """
     Unit tests for Employee API endpoints.
     """
+
+    def test_employee_creation(self):
+        employee = Employee.objects.get(email="john.doe@example.com")
+        self.assertEqual(employee.first_name, "John")
+
 
     def test_list_employees(self):
         """
